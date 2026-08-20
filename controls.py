@@ -11,9 +11,9 @@ def controls_initialize(cam_position, camera_rotation, forward_rot, right_rot, d
     
     # Keyboard controls
     if keyboard.is_pressed("q"):
-        new_pos = cam_position[0], cam_position[1], cam_position[2] + cam_speed * delta_seconds
+        new_pos = cam_position[0], cam_position[1], cam_position[2] - cam_speed * delta_seconds
     if keyboard.is_pressed("e"):
-        new_pos = cam_position[0], cam_position[1], cam_position[2] - cam_speed * delta_seconds 
+        new_pos = cam_position[0], cam_position[1], cam_position[2] + cam_speed * delta_seconds 
     if keyboard.is_pressed("w"):
         new_pos = plusV(cam_position, forward_rot)
     if keyboard.is_pressed("s"):
@@ -27,7 +27,7 @@ def controls_initialize(cam_position, camera_rotation, forward_rot, right_rot, d
     if len(past_mouse) > 1: 
         
         dxm = ((past_mouse[-1][0] - past_mouse[0][0]) * delta_seconds * sensivity)
-        dym = ((past_mouse[-1][1] - past_mouse[0][1]) * delta_seconds * sensivity)
+        dym = ((past_mouse[-1][1] - past_mouse[0][1]) * delta_seconds * sensivity) * -1
 
         new_rot = (0, new_rot[1] + dxm, min(max(new_rot[2] + dym, -89), 89))
 

@@ -3,6 +3,8 @@ import numpy as np
 
 def dot(a, b): return a[0]*b[0] + a[1]*b[1] + a[2]*b[2]
 
+def dot(a, b): return a[0]*b[0] + a[1]*b[1] + a[2]*b[2]
+
 def rad_rotation(rotation):return radians(rotation[0]), radians(rotation[1]), radians(rotation[2])
 
 def normalize(a):
@@ -49,11 +51,22 @@ def get_camera_rots(camera_rot):
     worldUp = (0, 0, 1)
     radians_rot = rad_rotation(camera_rot)
 
-    rx = cos(radians_rot[2]) * cos(radians_rot[1])
-    ry = cos(radians_rot[2]) * sin(radians_rot[1])
-    rz = sin(radians_rot[2])
+    yaw, pitch = radians_rot[1], radians_rot[2]
+
+    rx = cos(pitch) * cos(yaw)
+    ry = cos(pitch) * sin(yaw)
+    rz = sin(pitch)
 
     forward = normalize((rx, ry, rz))
     right = normalize(cross(forward, worldUp))
 
     return forward, right
+
+def triangle_normal(triangle):
+    AB = minusV(triangle[2], triangle[0])
+    AC = minusV(triangle[1], triangle[0])
+
+    return normalize(cross(AB, AC))
+
+def unit_direction(start, target):
+    return normalize(minusV(target, start))
